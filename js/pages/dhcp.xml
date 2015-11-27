@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<DHCP_SERVER>
+    <STATUS>running</STATUS>
+    <INTERFACE>br-lan</INTERFACE>
+    <START>192.168.1.20</START>
+    <END>192.168.1.254</END>
+    <ROUTER>192.168.1.1</ROUTER>
+    <TIME>864000</TIME>
+    <STATIC>1</STATIC>
+    <DNS1>168.126.63.1</DNS1>
+    <DNS2>168.126.63.2</DNS2>
+    <STATIC_LEASE>
+        <MAC>00:40:5C:8E:55:EE</MAC>
+        <IP>192.168.1.50</IP>
+    </STATIC_LEASE>
+    <LEASE>
+        <MAC>00:40:5c:8e:c1:58</MAC>
+        <IP>192.168.1.27</IP>
+        <HOSTNAME></HOSTNAME>
+        <EXPIRESIN>expired </EXPIRESIN>
+    </LEASE>
+</DHCP_SERVER>

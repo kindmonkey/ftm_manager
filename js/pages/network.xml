@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<STATUS_NETWORK>
+    <CMT>eth 1 br-lan 192.168.1.1 255.255.255.0 00:40:5C:8E:93:2F
+    </CMT>
+    <ETH>
+        <INDEX>1</INDEX>
+        <IFNAME>br-lan</IFNAME>
+        <IPADDR>192.168.1.1</IPADDR>
+        <NETMASK>255.255.255.0</NETMASK>
+        <MACADDR>00:40:5C:8E:93:2F</MACADDR>
+    </ETH>
+    <CMT>eth 2 eth0 10.0.1.114 255.255.255.0 00:40:5C:8E:93:2E
+    </CMT>
+    <ETH>
+        <INDEX>2</INDEX>
+        <IFNAME>eth0</IFNAME>
+        <IPADDR>10.0.1.114</IPADDR>
+        <NETMASK>255.255.255.0</NETMASK>
+        <MACADDR>00:40:5C:8E:93:2E</MACADDR>
+    </ETH>
+    <CMT>eth 3 usb0 192.168.223.10 255.255.255.0 B2:90:9D:1B:C6:6C
+    </CMT>
+    <ETH>
+        <INDEX>3</INDEX>
+        <IFNAME>usb0</IFNAME>
+        <IPADDR>192.168.223.10</IPADDR>
+        <NETMASK>255.255.255.0</NETMASK>
+        <MACADDR>B2:90:9D:1B:C6:6C</MACADDR>
+    </ETH>
+    <CMT>dns 1 nameserver 10.0.1.1
+    </CMT>
+    <DNS>
+        <INDEX>1</INDEX>
+        <NAME>nameserver</NAME>
+        <IPADDR>10.0.1.1</IPADDR>
+    </DNS>
+    <CMT>dns 2 search kornet
+    </CMT>
+    <DNS>
+        <INDEX>2</INDEX>
+        <NAME>search</NAME>
+        <IPADDR>kornet</IPADDR>
+    </DNS>
+    <CMT>dns 3 nameserver 192.168.223.1
+    </CMT>
+    <DNS>
+        <INDEX>3</INDEX>
+        <NAME>nameserver</NAME>
+        <IPADDR>192.168.223.1</IPADDR>
+    </DNS>
+</STATUS_NETWORK>
