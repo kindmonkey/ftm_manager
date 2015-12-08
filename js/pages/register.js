@@ -5,17 +5,30 @@ $(document).ready(function(){
 
     // 검색 버튼
     $("#btn_search").click(function(){
-        loadData();
+        var mac = document.getElementById("inputMac").value;
+        console.log(mac);
+        loadData(mac);
     });
 });
-function loadData () {
-    $.getJSON("../sensornodedata.json", function (data) {
-        var tbody = makePanel("00405c8e6838");
+function loadData (_mac) {
 
-        $.each(data, function (index, item) {
-            console.log(index, item);
-            makeBody(tbody, index, item, "00405c8e6838");
-        });
+    $.ajax({
+        type:"get",
+        url:"/cgi-bin/sensor?cmd=getlist&mac=" + _mac,
+        //url:"../js/pages/network.xml",
+        dataType:"xml",
+        success : function(xml) {
+            var tbody = makePanel(_mac);
+
+            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+            // TODO
+            $(xml).find("SENSOR").each(function(){
+                makeBody(tbody, $(this), $(this).find("MAC").text());
+            });
+        },
+        error : function(xhr, status, error) {
+            alert("에러발생");
+        }
     });
 }
 
@@ -66,11 +79,11 @@ function makePanel(_mac) {
     input.value = "";
     thead_tr.appendChild(document.createElement("th")).appendChild(input);
     thead_tr.appendChild(document.createElement("th")).innerHTML = "ID";
-    thead_tr.appendChild(document.createElement("th")).innerHTML = "Name";
-    thead_tr.appendChild(document.createElement("th")).innerHTML = "Type";
-    thead_tr.appendChild(document.createElement("th")).innerHTML = "Value";
-    thead_tr.appendChild(document.createElement("th")).innerHTML = "Time";
-    thead_tr.appendChild(document.createElement("th")).innerHTML = "Status";
+    thead_tr.appendChild(document.createElement("th")).innerHTML = "NAME";
+    thead_tr.appendChild(document.createElement("th")).innerHTML = "TYPE";
+    thead_tr.appendChild(document.createElement("th")).innerHTML = "SN";
+    thead_tr.appendChild(document.createElement("th")).innerHTML = "STATE";
+    thead_tr.appendChild(document.createElement("th")).innerHTML = "VALUE";
     table.appendChild(thead);
 
     var tbody = document.createElement("tbody");
@@ -90,7 +103,7 @@ function makePanel(_mac) {
     return tbody;
 }
 
-function makeBody(_tbody, _index, _item, _mac) {
+function makeBody(_tbody, _item, _mac) {
 
     var tbody_tr = document.createElement("tr");
     _tbody.appendChild(tbody_tr);
@@ -99,16 +112,16 @@ function makeBody(_tbody, _index, _item, _mac) {
     input.type = "checkbox";
     input.value = "";
     tbody_tr.appendChild(document.createElement("th")).appendChild(input);
-    tbody_tr.appendChild(document.createElement("th")).innerHTML = _item.id;
+    tbody_tr.appendChild(document.createElement("th")).innerHTML = _item.find("ID").text();
     var input = document.createElement("input");
     input.setAttribute("class", "form-control");
     input.setAttribute("type", "text");
-    input.setAttribute("id", "input_" + _mac + "_" + _item.id + "_" + _index);
-    input.value = _item.name;
+    input.setAttribute("id", "input_" + _mac + "_" + _item.find("ID").text());// + "_" + _index);
+    input.value = _item.find("NAME").text();
     console.log(input.id);
     tbody_tr.appendChild(document.createElement("td").appendChild(input));
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.type;
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.value;
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.time;
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.status;
+    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("TYPE").text();
+    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("SN").text();
+    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("STATE").text();
+    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("VALUE").text();
 }

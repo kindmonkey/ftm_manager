@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<SENSOR_LIST>
+    <SENSOR>
+        <MAC>"00:40:5c:64:4e:76"</MAC><ID>"02800101"</ID>
+        <TYPE>"HUMIDITY"</TYPE>
+        <NAME>"SHT-HUMI"</NAME>
+        <SN>"00405c644e7602800101"</SN>
+        <STATE>"RUN"</STATE>
+        <VALUE>"18.2"</VALUE>
+    </SENSOR>
+    <SENSOR>
+        <MAC>"00:40:5c:64:4e:76"</MAC><ID>"02800202"</ID>
+        <TYPE>"HUMIDITY"</TYPE>
+        <NAME>"MV250-HUMI"</NAME>
+        <SN>"00405c644e7602800202"</SN>
+        <STATE>"RUN"</STATE>
+        <VALUE>"N/A"</VALUE>
+    </SENSOR>
+    <SENSOR>
+        <MAC>"00:40:5c:64:4e:76"</MAC><ID>"01800202"</ID>
+        <TYPE>"TEMPERATURE"</TYPE>
+        <NAME>"MV250-TEMP"</NAME>
+        <SN>"00405c644e7601800202"</SN>
+        <STATE>"RUN"</STATE>
+        <VALUE>"N/A"</VALUE>
+    </SENSOR>
+    <SENSOR>
+        <MAC>"00:40:5c:64:4e:76"</MAC><ID>"01020003"</ID>
+        <TYPE>"TEMPERATURE"</TYPE>
+        <NAME>"DS18B20-16908291"</NAME>
+        <SN>"28ff9b776814024a"</SN>
+        <STATE>"RUN"</STATE>
+        <VALUE>"N/A"</VALUE>
+    </SENSOR>
+    <SENSOR>
+        <MAC>"00:40:5c:64:4e:76"</MAC><ID>"01800101"</ID>
+        <TYPE>"TEMPERATURE"</TYPE>
+        <NAME>"SHT-TEMP"</NAME>
+        <SN>"00405c644e7601800101"</SN>
+        <STATE>"RUN"</STATE>
+        <VALUE>"28.6"</VALUE>
+    </SENSOR>
+</SENSOR_LIST>
