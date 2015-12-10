@@ -1,6 +1,8 @@
 /**
  * Created by kindmong on 2015-10-27.
  */
+var sensors = [];
+
 $(document).ready(function(){
 
     // 검색 버튼
@@ -14,8 +16,8 @@ function loadData (_mac) {
 
     $.ajax({
         type:"get",
-        url:"/cgi-bin/sensor?cmd=getlist&mac=" + _mac,
-        //url:"../js/pages/network.xml",
+        //url:"/cgi-bin/sensor?cmd=getlist&mac=" + _mac,
+        url:"../js/pages/network.xml",
         dataType:"xml",
         success : function(xml) {
             var tbody = makePanel(_mac);
@@ -30,6 +32,50 @@ function loadData (_mac) {
             alert("에러발생");
         }
     });
+}
+
+function setDatabase() {
+    // 배열에 들어있는 센서들을 DB에 넣는다.
+    // 파라미터에 이어 붙여 보낸다.
+    console.log("센서 등록");
+
+    var mac = sensors[0].substr(3, 12);
+    var id = sensors[0].substr(16);
+    console.log(mac, id);
+
+    $.ajax({
+        type:"post",
+        url:"/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
+        //url:"../js/pages/network.xml",
+        dataType:"xml",
+        success : function(xml) {
+            var tbody = makePanel(_mac);
+
+            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+            // TODO
+            //$(xml).find("SENSOR").each(function(){
+            //    makeBody(tbody, $(this), $(this).find("MAC").text());
+            //});
+        },
+        error : function(xhr, status, error) {
+            alert("에러발생");
+        }
+    });
+
+}
+
+
+function onCheckboxClicked() {
+    // 체크가 된 센서들을 배열에 넣는다.
+    //console.log(this.id, this.checked);
+    if (this.checked == true) {
+        sensors.push(this.id);
+    } else {
+        if (sensors.indexOf(this.id) != -1) {
+            sensors.splice(sensors.indexOf(this.id), 1);
+        }
+    }
+    console.log(sensors);
 }
 
 function makePanel(_mac) {
@@ -58,6 +104,7 @@ function makePanel(_mac) {
     var btn_success = document.createElement("button");
     btn_success.setAttribute("class", "btn btn-success");
     btn_success.setAttribute("type", "button");
+    btn_success.addEventListener("click", setDatabase);
     btn_success.appendChild(document.createTextNode("Register"));
 
     //패널 닫기 버튼
@@ -77,7 +124,7 @@ function makePanel(_mac) {
     var input = document.createElement("input");
     input.setAttribute("type", "checkbox");
     input.value = "";
-    thead_tr.appendChild(document.createElement("th")).appendChild(input);
+    thead_tr.appendChild(document.createElement("th")).innerHTML = ""; //appendChild(input);
     thead_tr.appendChild(document.createElement("th")).innerHTML = "ID";
     thead_tr.appendChild(document.createElement("th")).innerHTML = "NAME";
     thead_tr.appendChild(document.createElement("th")).innerHTML = "TYPE";
@@ -111,8 +158,11 @@ function makeBody(_tbody, _item, _mac) {
     var input = document.createElement("input");
     input.type = "checkbox";
     input.value = "";
+    input.setAttribute("id", "cb_" + _mac.replace(/"/g, "").replace(/:/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));// + "_" + _index);
+    input.addEventListener("change", onCheckboxClicked);
     tbody_tr.appendChild(document.createElement("th")).appendChild(input);
     tbody_tr.appendChild(document.createElement("th")).innerHTML = _item.find("ID").text();
+
     var input = document.createElement("input");
     input.setAttribute("class", "form-control");
     input.setAttribute("type", "text");
