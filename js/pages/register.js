@@ -39,29 +39,28 @@ function setDatabase() {
     // 파라미터에 이어 붙여 보낸다.
     console.log("센서 등록");
 
-    var mac = sensors[0].substr(3, 12);
-    var id = sensors[0].substr(16);
-    console.log(mac, id);
+    $.each (sensors, function (index, value){
+        var mac = value.substr(3, 12);
+        var id = value.substr(16);
+        console.log(index, mac, id);
 
-    $.ajax({
-        type:"post",
-        url:"/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
-        //url:"../js/pages/network.xml",
-        dataType:"xml",
-        success : function(xml) {
-            var tbody = makePanel(_mac);
-
-            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-            // TODO
-            //$(xml).find("SENSOR").each(function(){
-            //    makeBody(tbody, $(this), $(this).find("MAC").text());
-            //});
-        },
-        error : function(xhr, status, error) {
-            alert("에러발생");
-        }
+        $.ajax({
+            type:"post",
+            url:"/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
+            //url:"../js/pages/network.xml",
+            dataType:"xml",
+            success : function(xml) {
+                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                // TODO
+                $(xml).find("SENSOR_ADDED").each(function(){
+                    console.log($(this).find("RET").text());
+                });
+            },
+            error : function(xhr, status, error) {
+                alert("에러발생");
+            }
+        });
     });
-
 }
 
 
