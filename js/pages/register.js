@@ -16,8 +16,8 @@ function loadData (_mac) {
 
     $.ajax({
         type:"get",
-        //url:"/cgi-bin/sensor?cmd=getlist&mac=" + _mac,
-        url:"../js/pages/network.xml",
+        url:"/cgi-bin/sensor?cmd=getlist&mac=" + _mac,
+        //url:"../js/pages/network.xml",
         dataType:"xml",
         success : function(xml) {
             var tbody = makePanel(_mac);
@@ -40,8 +40,8 @@ function setDatabase() {
     console.log("센서 등록");
 
     $.each (sensors, function (index, value){
-        var mac = value.substr(3, 12);
-        var id = value.substr(16);
+        var mac = value.substr(3, 17);
+        var id = value.substr(21);
         console.log(index, mac, id);
 
         $.ajax({
@@ -157,7 +157,7 @@ function makeBody(_tbody, _item, _mac) {
     var input = document.createElement("input");
     input.type = "checkbox";
     input.value = "";
-    input.setAttribute("id", "cb_" + _mac.replace(/"/g, "").replace(/:/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));// + "_" + _index);
+    input.setAttribute("id", "cb_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));// + "_" + _index);
     input.addEventListener("change", onCheckboxClicked);
     tbody_tr.appendChild(document.createElement("th")).appendChild(input);
     tbody_tr.appendChild(document.createElement("th")).innerHTML = _item.find("ID").text();
