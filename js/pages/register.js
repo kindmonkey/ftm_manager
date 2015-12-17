@@ -45,6 +45,7 @@ function setDatabase() {
         console.log(index, mac, id);
 
         $.ajax({
+            async:false,
             type:"post",
             url:"/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
             //url:"../js/pages/network.xml",
