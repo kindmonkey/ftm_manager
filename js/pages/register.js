@@ -55,6 +55,7 @@ function setDatabase() {
                 // TODO
                 $(xml).find("SENSOR_ADDED").each(function(){
                     console.log($(this).find("RET").text());
+                    removeList(mac, id);
                 });
             },
             error : function(xhr, status, error) {
@@ -62,6 +63,7 @@ function setDatabase() {
             }
         });
     });
+    sensors = [];
 }
 
 
@@ -162,16 +164,27 @@ function makeBody(_tbody, _item, _mac) {
     input.addEventListener("change", onCheckboxClicked);
     tbody_tr.appendChild(document.createElement("th")).appendChild(input);
     tbody_tr.appendChild(document.createElement("th")).innerHTML = _item.find("ID").text();
+    tbody_tr.setAttribute("id", "tr_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));
 
     var input = document.createElement("input");
     input.setAttribute("class", "form-control");
     input.setAttribute("type", "text");
     input.setAttribute("id", "input_" + _mac + "_" + _item.find("ID").text());// + "_" + _index);
     input.value = _item.find("NAME").text();
-    console.log(input.id);
+    console.log("input.id = ", input.id);
     tbody_tr.appendChild(document.createElement("td").appendChild(input));
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("TYPE").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("SN").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("STATE").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("VALUE").text();
+}
+
+function removeList(_mac, _id) {
+
+    // 리스트에서 삭제
+    var tr = document.getElementById("tr_" + _mac + "_" + _id);
+    console.log("test = ", tr);
+    var tr_parent = tr.parentNode;
+    tr_parent.removeChild(tr);
+    tr = null;
 }
