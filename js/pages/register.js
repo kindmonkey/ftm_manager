@@ -56,7 +56,6 @@ function setDatabase() {
                 $(xml).find("SENSOR_ADDED").each(function(){
                     console.log($(this).find("RET").text());
                     removeList(mac, id);
-                    
                     if (sensors.length == index + 1) {
                         alert("SAVE SENSOR");
                     }
@@ -88,6 +87,7 @@ function makePanel(_mac) {
 
     // 패널을 추가할 row 생성
     var row = document.createElement("div");
+    row.setAttribute("id", "row_" + _mac);
     row.setAttribute("class", "row");
 
     var col_lg_12 = document.createElement("div");
@@ -117,7 +117,8 @@ function makePanel(_mac) {
     var btn_close = document.createElement("button");
     btn_close.setAttribute("class", "btn btn-danger");
     btn_close.setAttribute("type", "button");
-    btn_close.setAttribute("click", removePanel);
+    btn_close.setAttribute("id", "close_" + _mac);
+    btn_close.addEventListener("click", removePanel);
     btn_close.appendChild(document.createTextNode("Close"));
 
     //패널 안에 센서 리스트들 테이블로 구성
@@ -192,4 +193,16 @@ function removeList(_mac, _id) {
     var tr_parent = tr.parentNode;
     tr_parent.removeChild(tr);
     tr = null;
+}
+
+function removePanel() {
+
+    var mac = this.id.substr(6);
+    var row_id = "row_" + mac;
+    var row = document.getElementById(row_id);
+
+    var row_parent = row.parentNode;
+    row_parent.removeChild(row);
+    row = null;
+   // console.log(mac);
 }
