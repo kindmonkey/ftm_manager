@@ -56,6 +56,10 @@ function setDatabase() {
                 $(xml).find("SENSOR_ADDED").each(function(){
                     console.log($(this).find("RET").text());
                     removeList(mac, id);
+                    
+                    if (sensors.length == index + 1) {
+                        alert("SAVE SENSOR");
+                    }
                 });
             },
             error : function(xhr, status, error) {
@@ -113,6 +117,7 @@ function makePanel(_mac) {
     var btn_close = document.createElement("button");
     btn_close.setAttribute("class", "btn btn-danger");
     btn_close.setAttribute("type", "button");
+    btn_close.setAttribute("click", removePanel);
     btn_close.appendChild(document.createTextNode("Close"));
 
     //패널 안에 센서 리스트들 테이블로 구성
