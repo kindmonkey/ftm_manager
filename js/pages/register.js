@@ -194,3 +194,15 @@ function removeList(_mac, _id) {
     tr_parent.removeChild(tr);
     tr = null;
 }
+
+function removePanel() {
+
+    var mac = this.id.substr(6);
+    var row_id = "row_" + mac;
+    var row = document.getElementById(row_id);
+
+    var row_parent = row.parentNode;
+    row_parent.removeChild(row);
+    row = null;
+   // console.log(mac);
+}
