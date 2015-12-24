@@ -16,7 +16,7 @@ function loadData (_mac) {
 
     $.ajax({
         type:"get",
-        url:"/cgi-bin/sensor?cmd=getlist&mac=" + _mac,
+        url:"http://10.0.1.159/cgi-bin/sensor?cmd=getlist&mac=" + _mac,
         //url:"../js/pages/network.xml",
         dataType:"xml",
         success : function(xml) {
@@ -47,7 +47,7 @@ function setDatabase() {
         $.ajax({
             async:false,
             type:"post",
-            url:"/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
+            url:"http://10.0.1.159/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
             //url:"../js/pages/network.xml",
             dataType:"xml",
             success : function(xml) {

@@ -5,20 +5,38 @@ $(document).ready(function(){
     loadData();
 });
 function loadData () {
-    $.getJSON("../../sensornodedata.json", function (data) {
-        var tbody = makePanel("00405c8e6838");
+    $.ajax({
+        type:"get",
+        url:"http://10.0.1.159/cgi-bin/sensor?cmd=sensinglist",
+        //url:"../js/pages/network.xml",
+        dataType:"xml",
+        success : function(xml) {
 
-        $.each(data, function (index, item) {
-            console.log(index, item);
-            makeBody(tbody, index, item);
-        });
+
+            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+            // TODO
+            $(xml).find("SENSOR").each(function(){
+                //console.log($(this), $(this).find("MAC").text());
+                var tbody = makePanel($(this).find("MAC").text());
+                makeBody(tbody, $(this), $(this).find("MAC").text());
+            });
+        },
+        error : function(xhr, status, error) {
+            alert("에러발생");
+        }
     });
 }
 
 function makePanel(_mac) {
 
+    if (document.getElementById("row_" + _mac)) {
+        //console.log("있음");
+        return document.getElementById("tbody_" + _mac);
+    }
+
     // 패널을 추가할 row 생성
     var row = document.createElement("div");
+    row.setAttribute("id", "row_" + _mac);
     row.setAttribute("class", "row");
 
     var col_lg_12 = document.createElement("div");
@@ -60,14 +78,11 @@ function makePanel(_mac) {
     thead_tr.appendChild(document.createElement("th")).innerHTML = "ID";
     thead_tr.appendChild(document.createElement("th")).innerHTML = "Name";
     thead_tr.appendChild(document.createElement("th")).innerHTML = "Type";
-    thead_tr.appendChild(document.createElement("th")).innerHTML = "Value";
-    thead_tr.appendChild(document.createElement("th")).innerHTML = "Time";
-    thead_tr.appendChild(document.createElement("th")).innerHTML = "Status";
     thead_tr.appendChild(document.createElement("th")).innerHTML = "Modify";
     table.appendChild(thead);
 
     var tbody = document.createElement("tbody");
-    tbody.setAttribute("id", "tbody");
+    tbody.setAttribute("id", "tbody_" + _mac);
     table.appendChild(tbody);
 
     row.appendChild(col_lg_12);
@@ -80,30 +95,26 @@ function makePanel(_mac) {
     return tbody;
 }
 
-function makeBody(_tbody, _index, _item) {
+function makeBody(_tbody, _item, _mac) {
 
     var tbody_tr = document.createElement("tr");
-    tbody_tr.setAttribute("id", "tr_" + _item.id);
     _tbody.appendChild(tbody_tr);
 
-    tbody_tr.appendChild(document.createElement("th")).innerHTML = _item.id;
-    var name_td = document.createElement("td");
-    name_td.setAttribute("id", "name");
-    tbody_tr.appendChild(name_td).innerHTML = _item.name;
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.type;
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.value;
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.time;
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.status;
+    tbody_tr.appendChild(document.createElement("th")).innerHTML = _item.find("ID").text();
+    tbody_tr.setAttribute("id", "tr_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));
+
+    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("NAME").text();
+    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("TYPE").text();
 
     var btn_modify = document.createElement("button");
     btn_modify.setAttribute("class", "btn btn-danger btn-xs");
     btn_modify.setAttribute("type", "button");
-    btn_modify.setAttribute("id", _item.id);
+    btn_modify.setAttribute("id", _item.find("ID").text());
     btn_modify.appendChild(document.createTextNode("Modify"));
     btn_modify.addEventListener("click", function(){
         console.log(this.id);
-        document.getElementById("modal_title").innerHTML = _item.id;
-        document.getElementById("sensor_name").value = _item.name;
+        document.getElementById("modal_title").innerHTML = _item.find("ID").text();
+        document.getElementById("sensor_name").value = _item.find("NAME").text();
         $("#myModal").modal();
     });
     tbody_tr.appendChild(document.createElement("th")).appendChild(btn_modify);
