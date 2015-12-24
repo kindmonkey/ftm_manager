@@ -52,26 +52,26 @@ BEGIN {
         values[idx] = $4;
     }
 
-#    if ($1 ~ /^iso.3.6.1.4.1.42251.1.3.256.2.1.7/)
-#    {
-#        lastvalues[idx] = $4;
-#    }
-#
-#    if ($1 ~ /^iso.3.6.1.4.1.42251.1.3.256.2.1.8/)
-#    {
-#        lasttimes[idx] = $4;
-#    }
-#
-#    if ($1 ~ /^iso.3.6.1.4.1.42251.1.3.256.2.1.9/)
-#    {
-#        intervals[idx] = $4;
-#    }
+    if ($1 ~ /^iso.3.6.1.4.1.42251.1.3.256.2.1.7/)
+    {
+        lastvalues[idx] = $4;
+    }
+
+    if ($1 ~ /^iso.3.6.1.4.1.42251.1.3.256.2.1.8/)
+    {
+        lasttimes[idx] = $4;
+    }
+
+    if ($1 ~ /^iso.3.6.1.4.1.42251.1.3.256.2.1.9/)
+    {
+        intervals[idx] = $4;
+    }
 
     idx++;
 }
 END {
     for (i=0; i<count; i++)
     {
-        print mac, ids[i], types[i], names[i], serials[i], states[i], values[i]; #, lastvalues[i], lasttimes[i], intervals[i];
+        print mac, ids[i], types[i], names[i], serials[i], states[i], values[i], lastvalues[i], lasttimes[i], intervals[i];
     }
 }

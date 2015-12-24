@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # get IP
-ip=`/www/cgi-bin/sensor_script/search_mac.sh $1`
+ip=`/home/kindmong/work/ftm_manager/cgi-bin/sensor_script/search_mac.sh $1`
 
-/www/cgi-bin/sensor_script/get_humidity_info.sh $ip | awk -f /www/cgi-bin/sensor_script/get_humidity_info.awk
-/www/cgi-bin/sensor_script/get_temperature_info.sh $ip | awk -f /www/cgi-bin/sensor_script/get_temperature_info.awk
+/home/kindmong/work/ftm_manager/cgi-bin/sensor_script/get_humidity_info.sh $ip | awk -f /home/kindmong/work/ftm_manager/cgi-bin/sensor_script/get_humidity_info.awk
+/home/kindmong/work/ftm_manager/cgi-bin/sensor_script/get_temperature_info.sh $ip | awk -f /home/kindmong/work/ftm_manager/cgi-bin/sensor_script/get_temperature_info.awk
