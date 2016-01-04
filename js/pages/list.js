@@ -51,21 +51,21 @@ function makePanel(_mac) {
     panel_header.setAttribute("class", "panel-heading");
     panel_header.innerHTML = _mac;
 
-    var panel_close_div = document.createElement("div");
-    panel_close_div.setAttribute("class", "pull-right");
-    var panel_close_btn = document.createElement("button");
-    panel_close_btn.setAttribute("class", "btn btn-danger btn-xs");
-    panel_close_btn.setAttribute("type", "button");
-    panel_close_btn.appendChild(document.createTextNode("X"));
-    panel_close_btn.addEventListener("click", function(){
-        var parent_row = row.parentNode;
-        parent_row.removeChild(row);
-        row = null;
-        removeSensorNode();
-    });
+    //var panel_close_div = document.createElement("div");
+    //panel_close_div.setAttribute("class", "pull-right");
+    //var panel_close_btn = document.createElement("button");
+    //panel_close_btn.setAttribute("class", "btn btn-danger btn-xs");
+    //panel_close_btn.setAttribute("type", "button");
+    //panel_close_btn.appendChild(document.createTextNode("X"));
+    //panel_close_btn.addEventListener("click", function(){
+    //    var parent_row = row.parentNode;
+    //    parent_row.removeChild(row);
+    //    row = null;
+    //    removeSensorNode();
+    //});
 
-    panel_close_div.appendChild(panel_close_btn);
-    panel_header.appendChild(panel_close_div);
+    //panel_close_div.appendChild(panel_close_btn);
+    //panel_header.appendChild(panel_close_div);
 
     //패널 안에 센서 리스트들 테이블로 구성
     var table = document.createElement("table");
@@ -109,11 +109,11 @@ function makeBody(_tbody, _item, _mac) {
     var btn_modify = document.createElement("button");
     btn_modify.setAttribute("class", "btn btn-danger btn-xs");
     btn_modify.setAttribute("type", "button");
-    btn_modify.setAttribute("id", _item.find("ID").text());
+    btn_modify.setAttribute("id", "btn_" + _item.find("ID").text());
     btn_modify.appendChild(document.createTextNode("Modify"));
     btn_modify.addEventListener("click", function(){
         console.log(this.id);
-        document.getElementById("modal_title").innerHTML = _item.find("ID").text();
+        document.getElementById("modal_title").innerHTML = _item.find("MAC").text() + " - " + _item.find("ID").text();
         document.getElementById("sensor_name").value = _item.find("NAME").text();
         $("#myModal").modal();
     });
@@ -142,12 +142,68 @@ function modifySensor() {
     td.innerHTML = document.getElementById("sensor_name").value;
 }
 
+function delSensorList() {
+
+    console.log("센서 삭제");
+
+    $.each (sensors, function (index, value){
+        var mac = value.substr(3, 17);
+        var id = value.substr(21);
+        console.log(index, mac, id);
+
+        $.ajax({
+            async:false,
+            type:"post",
+            url:"http://10.0.1.159/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
+            //url:"../js/pages/network.xml",
+            dataType:"xml",
+            success : function(xml) {
+                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                // TODO
+                $(xml).find("SENSOR_ADDED").each(function(){
+                    console.log($(this).find("RET").text());
+                    removeList(mac, id);
+                    if (sensors.length == index + 1) {
+                        alert("SAVE SENSOR");
+                    }
+                });
+            },
+            error : function(xhr, status, error) {
+                alert("에러발생");
+            }
+        });
+    });
+    sensors = [];
+}
+
 function removeSensor() {
     // db에서 삭제
+    var mac = document.getElementById("modal_title").innerHTML.substr(0, 17);
+    var id = document.getElementById("modal_title").innerHTML.substr(20);
+
+    $.ajax({
+        async:false,
+        type:"post",
+        url:"http://10.0.1.159/cgi-bin/sensor?cmd=delete&mac=" + mac + "&id=" + id,
+        dataType:"xml",
+        success : function(xml) {
+            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+            // TODO
+            $(xml).find("SENSOR_ADDED").each(function(){
+                console.log($(this).find("RET").text());
+
+                if ($(this).find("RET").text() == "OK") {
+                    alert("DELETE SENSOR");
+                }
+            });
+        },
+        error : function(xhr, status, error) {
+            alert("에러발생");
+        }
+    });
 
     // 리스트에서 삭제
-    var id = document.getElementById("modal_title").innerHTML;
-    var tr = document.getElementById("tr_" + id);
+    var tr = document.getElementById("tr_" + mac + "_" + id);
     console.log(tr);
     var tr_parent = tr.parentNode;
     tr_parent.removeChild(tr);
