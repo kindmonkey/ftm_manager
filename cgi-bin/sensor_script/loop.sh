@@ -10,7 +10,7 @@ do
     do
         node_id=`echo $params | awk -F"|" '{ print $1 }'`
         sensor_id=`echo $params | awk -F"|" '{ print $2 }'`
-        `./get_fte_es7.sh $node_id | awk '/'$sensor_id'/' | xargs -t ./pull_sensor_data.sh`
+        `./search_node.sh $node_id | awk '/'$sensor_id'/' | xargs -t ./push_sensor_data.sh`
     done
 
 	sleep 10
