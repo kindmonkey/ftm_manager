@@ -206,8 +206,8 @@ function makeBody(_tbody, _item, _mac, _favorite) {
             // 이전 데이터를 삭제하여 테이블을 비운다.
             $("#modal_table tr:not(:first)").remove();
             datas = [];
-            for (var i=0; i<values.length; i++) {
-                var json = {time: times[i], value: values[i]};
+            for (var i=1; i<=values.length; i++) {
+                var json = {time: times[values.length - i], value: values[values.length - i]};
                 datas.push(json);
             }
             document.getElementById("modalgraph_title").innerHTML = _item.find("MAC").text() + " - " + _item.find("ID").text();
@@ -280,13 +280,12 @@ function makeBody(_tbody, _item, _mac, _favorite) {
         // 이전 데이터를 삭제하여 테이블을 비운다.
         $("#modal_table tr:not(:first)").remove();
         datas = [];
-
         var modal_tbody = document.getElementById("modal_tbody");
-        for (var i=0; i<values.length; i++) {
-            var json = {time: times[i], value: values[i]};
+        for (var i=1; i<=values.length; i++) {
+            var json = {time: times[values.length - i], value: values[values.length - i]};
             datas.push(json);
         }
-
+        //console.log(datas);
         document.getElementById("modalgraph_title").innerHTML = _item.find("MAC").text() + " - " + _item.find("ID").text();
         //document.getElementById("sensor_name").value = _item.find("NAME").text();
         $("#myModalGraph").modal();
