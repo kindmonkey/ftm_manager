@@ -11,12 +11,10 @@
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
     <link href="../../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link href="../../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-    <!-- DataTables Responsive CSS -->
-    <link href="../../bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="../../bower_components/morrisjs/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="../../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -73,88 +71,54 @@
 
         <div id="page-wrapper">
             <br>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">SensorNode 1
-                            <div class="pull-right">
-                                <button type="button" class="btn btn-default btn-xs">X</button>
-                            </div>
-                        </div>
-                        <!-- Table -->
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>*</th>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Value</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>Graph</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <input type="checkbox" value="">
-                                </th>
-                                <td>온도01-01</td>
-                                <td>Temp</td>
-                                <td>30'C</td>
-                                <td>2015-10-17 09:00:00</td>
-                                <td>OK</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">Graph</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <input type="checkbox" value="">
-                                </th>
-                                <td>온도01-02</td>
-                                <td>Temp</td>
-                                <td>30'C</td>
-                                <td>2015-10-17 09:00:00</td>
-                                <td>OK</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-xs">Graph</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <input type="checkbox" value="">
-                                </th>
-                                <td>습도01-01</td>
-                                <td>Humi</td>
-                                <td>30'C</td>
-                                <td>2015-10-17 09:00:00</td>
-                                <td>Error</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-xs">Graph</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> <!-- SensorNode -->
             <!-- /.row -->
+
         </div>
             <!-- /.container-fluid -->
     </div>
     <!-- /#wrapper -->
 
+    <!-- 리스트를 위한 Modal -->
     <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modal_title">00000000000</h4>
+                </div>
+                <div class="modal-body form-inline" id="modal_body">
+                    <!--<label for="sensor_name">Name : </label>-->
+                    <!--<input type="text" class="form-control" id="sensor_name" style="width: 90%">-->
+                    <table class="table" id="modal_table">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">Index</th>
+                            <th class="col-md-2">ID</th>
+                            <th class="col-md-2">Name</th>
+                            <th class="col-md-2">Type</th>
+                            <th class="col-md-2">Value</th>
+                            <th class="col-md-3">Time</th>
+                            <th class="col-md-2">State</th>
+                        </tr>
+                        </thead>
+                        <tbody id="modal_tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- 그래프를 위한 Modal -->
+    <div class="modal fade" id="myModalGraph">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">SensorNode 1</h4>
+                    <h4 class="modal-title" id="modalgraph_title">000000000000</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Graph</p>
+                    <div id="myfirstchart" style="height: 250px;"></div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -165,10 +129,11 @@
     <script src="../../js/bootstrap/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-    <!-- DataTables JavaScript -->
-    <script src="../../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="../../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <!-- Morris Charts JavaScript -->
+    <script src="../../bower_components/raphael/raphael-min.js"></script>
+    <script src="../../bower_components/morrisjs/morris.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
+    <script src="../../js/pages/favorite.js"></script>
 </body>
 </html>

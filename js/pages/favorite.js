@@ -2,7 +2,7 @@
  * Created by kindmong on 2015-10-27.
  */
 
-var arr;
+var datas;
 
 $(document).ready(function(){
     loadSensorList();
@@ -34,7 +34,6 @@ function loadSensorList () {
             alert("에러발생");
         }
     });
-
 }
 
 function loadData (_mac, _id, _favorite) {
@@ -52,9 +51,11 @@ function loadData (_mac, _id, _favorite) {
                 //console.log($(this).find("MAC").text());
                 //arr.push($(this));
                 //console.log("Asdfasdfasdf");
-                var tbody = makePanel($(this).find("MAC").text());
                 //tbody.remove();
-                makeBody(tbody, $(this), $(this).find("MAC").text(), _favorite);
+                if (_favorite == true) {
+                    var tbody = makePanel($(this).find("MAC").text());
+                    makeBody(tbody, $(this), $(this).find("MAC").text(), _favorite);
+                }
             });
         },
         error : function(xhr, status, error) {
@@ -112,8 +113,8 @@ function makePanel(_mac) {
     var thead_tr = document.createElement("tr");
     thead.appendChild(thead_tr);
 
-    var thNames = ["<span class='glyphicon glyphicon-star' aria-hidden='true'></span>", "ID", "Name", "Type", "Value", "Time", "State", "List"];
-    var className = ["col-md-1", "col-md-1", "col-md-2", "col-md-2", "col-md-1", "col-md-3", "col-md-2", "col-md-2"];
+    var thNames = ["<span class='glyphicon glyphicon-star' aria-hidden='true'></span>", "ID", "Name", "Type", "Value", "Time", "State", "List", "Graph"];
+    var className = ["col-md-1", "col-md-1", "col-md-2", "col-md-2", "col-md-1", "col-md-3", "col-md-2", "col-md-2", "col-md-2"];
 
     for (var i=0; i<thNames.length; i++) {
         var th = document.createElement("th");
@@ -160,10 +161,10 @@ function makeBody(_tbody, _item, _mac, _favorite) {
     });
 
     if (document.getElementById("tr_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""))) {
-        console.log("있음");
+        //console.log("있음");
         // 있으면 이미 만들어진 칼럼을 갱신한다.
         var tr = document.getElementById("tr_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));
-        console.log(Number(true), Number(false));
+        //console.log(Number(true), Number(false));
 
         var cb_input = document.getElementById("cb_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));
         cb_input.checked = Number(_favorite);
@@ -244,8 +245,6 @@ function makeBody(_tbody, _item, _mac, _favorite) {
     btn_list.setAttribute("id", "btn_" + _mac + "_" + _item.find("ID").text());
     btn_list.appendChild(document.createTextNode("LIST"));
     btn_list.addEventListener("click", function() {
-        //console.log("test ", this.id);
-
         // 이전 데이터를 삭제하여 테이블을 비운다.
         $("#modal_table tr:not(:first)").remove();
 
@@ -296,11 +295,11 @@ function makeBody(_tbody, _item, _mac, _favorite) {
 
 function onCheckboxClicked() {
     // 체크의 여부에 따라 Favorite에 등록 및 제거를 한다.
-    //console.log(this.id, this.checked);
+    console.log(this.id, this.checked);
     var mac = this.id.substr(3, 17);
     var id = this.id.substr(21);
     var checked = Number(this.checked);
-    //console.log(mac, id, checked);
+    console.log(mac, id, checked);
 
     $.ajax({
         //async:false,
@@ -311,11 +310,21 @@ function onCheckboxClicked() {
             // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
             // TODO
             $(xml).find("SENSOR_MODIFY").each(function(){
-                //console.log($(this).find("RET").text());
+                console.log($(this).find("RET").text());
 
                 if ($(this).find("RET").text() == "OK") {
                     if (checked == 0) {
                         alert("remove favorite list");
+                        // 리스트에서 삭제
+                        var tr = document.getElementById("tr_" + mac + "_" + id);
+                        console.log("test = ", tr);
+                        var tr_parent = tr.parentNode;
+                        tr_parent.removeChild(tr);
+                        tr = null;
+
+                        // 패널에 센서 리스트가 남아있는지 확인하여 패널도 UI에서 제거한다.
+
+
                     } else {
                         alert("add favorite list");
                     }
@@ -326,86 +335,6 @@ function onCheckboxClicked() {
             alert("에러발생");
         }
     });
-}
-
-function modifySensor() {
-    // db 수정
-
-    // 리스트에서 수정
-    var id = document.getElementById("modal_title").innerHTML;
-    var tr = document.getElementById("tr_" + id);
-    console.log(tr);
-    var td = tr.childNodes.item(1);
-    console.log(td);
-    td.innerHTML = document.getElementById("sensor_name").value;
-}
-
-function delSensorList() {
-
-    console.log("센서 삭제");
-
-    $.each (sensors, function (index, value){
-        var mac = value.substr(3, 17);
-        var id = value.substr(21);
-        console.log(index, mac, id);
-
-        $.ajax({
-            async:false,
-            type:"post",
-            url:"http://10.0.1.159/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
-            //url:"../js/pages/network.xml",
-            dataType:"xml",
-            success : function(xml) {
-                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-                // TODO
-                $(xml).find("SENSOR_ADDED").each(function(){
-                    console.log($(this).find("RET").text());
-                    removeList(mac, id);
-                    if (sensors.length == index + 1) {
-                        alert("SAVE SENSOR");
-                    }
-                });
-            },
-            error : function(xhr, status, error) {
-                alert("에러발생");
-            }
-        });
-    });
-    sensors = [];
-}
-
-function removeSensor() {
-    // db에서 삭제
-    var mac = document.getElementById("modal_title").innerHTML.substr(0, 17);
-    var id = document.getElementById("modal_title").innerHTML.substr(20);
-
-    $.ajax({
-        async:false,
-        type:"post",
-        url:"http://10.0.1.159/cgi-bin/sensor?cmd=delete&mac=" + mac + "&id=" + id,
-        dataType:"xml",
-        success : function(xml) {
-            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-            // TODO
-            $(xml).find("SENSOR_ADDED").each(function(){
-                console.log($(this).find("RET").text());
-
-                if ($(this).find("RET").text() == "OK") {
-                    alert("DELETE SENSOR");
-                }
-            });
-        },
-        error : function(xhr, status, error) {
-            alert("에러발생");
-        }
-    });
-
-    // 리스트에서 삭제
-    var tr = document.getElementById("tr_" + mac + "_" + id);
-    console.log(tr);
-    var tr_parent = tr.parentNode;
-    tr_parent.removeChild(tr);
-    tr = null;
 }
 
 $('#myModalGraph').on('shown.bs.modal', function () {

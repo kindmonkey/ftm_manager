@@ -129,9 +129,9 @@ function makePanel(_mac) {
     var thead_tr = document.createElement("tr");
     thead.appendChild(thead_tr);
 
-    var input = document.createElement("input");
-    input.setAttribute("type", "checkbox");
-    input.value = "";
+    //var input = document.createElement("input");
+    //input.setAttribute("type", "checkbox");
+    //input.value = "";
     thead_tr.appendChild(document.createElement("th")).innerHTML = ""; //appendChild(input);
     thead_tr.appendChild(document.createElement("th")).innerHTML = "ID";
     thead_tr.appendChild(document.createElement("th")).innerHTML = "NAME";
