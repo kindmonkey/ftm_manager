@@ -160,10 +160,10 @@ function makeBody(_tbody, _item, _mac, _favorite) {
     });
 
     if (document.getElementById("tr_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""))) {
-        console.log("있음");
+        //console.log("있음");
         // 있으면 이미 만들어진 칼럼을 갱신한다.
         var tr = document.getElementById("tr_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));
-        console.log(Number(true), Number(false));
+        //console.log(Number(true), Number(false));
 
         var cb_input = document.getElementById("cb_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));
         cb_input.checked = Number(_favorite);
@@ -309,17 +309,17 @@ function onCheckboxClicked() {
         success : function(xml) {
             // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
             // TODO
-            $(xml).find("SENSOR_MODIFY").each(function(){
-                //console.log($(this).find("RET").text());
-
-                if ($(this).find("RET").text() == "OK") {
-                    if (checked == 0) {
-                        alert("remove favorite list");
-                    } else {
-                        alert("add favorite list");
-                    }
-                }
-            });
+            //$(xml).find("SENSOR_MODIFY").each(function(){
+            //    //console.log($(this).find("RET").text());
+            //
+            //    if ($(this).find("RET").text() == "OK") {
+            //        if (checked == 0) {
+            //            alert("remove favorite list");
+            //        } else {
+            //            alert("add favorite list");
+            //        }
+            //    }
+            //});
         },
         error : function(xhr, status, error) {
             alert("에러발생");

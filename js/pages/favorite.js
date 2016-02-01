@@ -314,7 +314,7 @@ function onCheckboxClicked() {
 
                 if ($(this).find("RET").text() == "OK") {
                     if (checked == 0) {
-                        alert("remove favorite list");
+                        //alert("remove favorite list");
                         // 리스트에서 삭제
                         var tr = document.getElementById("tr_" + mac + "_" + id);
                         console.log("test = ", tr);
