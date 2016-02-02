@@ -7,7 +7,7 @@ $(document).ready(function(){
 function loadData () {
     $.ajax({
         type:"get",
-        url:"http://10.0.1.159/cgi-bin/sensor?cmd=sensinglist",
+        url:"/cgi-bin/sensor?cmd=sensinglist",
         //url:"../js/pages/network.xml",
         dataType:"xml",
         success : function(xml) {
@@ -154,7 +154,7 @@ function delSensorList() {
         $.ajax({
             async:false,
             type:"post",
-            url:"http://10.0.1.159/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
+            url:"/cgi-bin/sensor?cmd=set&mac=" + mac + "&id=" + id,
             //url:"../js/pages/network.xml",
             dataType:"xml",
             success : function(xml) {
@@ -184,7 +184,7 @@ function removeSensor() {
     $.ajax({
         async:false,
         type:"post",
-        url:"http://10.0.1.159/cgi-bin/sensor?cmd=delete&mac=" + mac + "&id=" + id,
+        url:"/cgi-bin/sensor?cmd=delete&mac=" + mac + "&id=" + id,
         dataType:"xml",
         success : function(xml) {
             // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.

@@ -1,4 +1,4 @@
 #!/bin/sh
-sudo sqlite3 /opt/sensor.db<< EOF
+sqlite3 /opt/sensor.db<< EOF
 select count(*) from sensor_data;
 EOF

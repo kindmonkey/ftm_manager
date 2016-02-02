@@ -4,7 +4,7 @@
 
 while [ 0 ]
 do
-    param_str=`/home/kindmong/work/ftm_manager/cgi-bin/sensor_script/get_sensor_list.sh`
+    param_str=`/www/cgi-bin/sensor_script/get_sensor_list.sh`
    
     for params in $param_str
     do

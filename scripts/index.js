@@ -107,7 +107,7 @@ function onClickLoginButton()
 	
 	var f = document.login;
 	//var data = "/cgi-bin/public?cmd=get_ssid&id=" + f.userid.value + "&pw=" + MD5(f.passwd.value) + "&seed=" + Math.random();
-	var data = "http://10.0.1.159/cgi-bin/public?cmd=get_ssid&id=" + f.userid.value + "&pw=" + MD5(f.passwd.value) + "&seed=" + Math.random();
+	var data = "/cgi-bin/public?cmd=get_ssid&id=" + f.userid.value + "&pw=" + MD5(f.passwd.value) + "&seed=" + Math.random();
 
 	xmlhttp.open( "POST", data, true );
 	xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=euc-kr");

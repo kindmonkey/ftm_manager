@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if [ -e /home/kindmong/work/ftm_manager/cgi-bin/sensor_script/get_db_count.sh ]
+if [ -e /www/cgi-bin/sensor_script/get_db_count.sh ]
 then
-	total=`/home/kindmong/work/ftm_manager/cgi-bin/sensor_script/get_db_count.sh`
+	total=`/www/cgi-bin/sensor_script/get_db_count.sh`
 	
 	if [ $(($1+$2)) -le $total ]
 	then

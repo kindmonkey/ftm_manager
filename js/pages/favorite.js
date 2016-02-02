@@ -17,7 +17,7 @@ function loadSensorList () {
     $.ajax({
         //async:false,
         type:"get",
-        url:"http://10.0.1.159/cgi-bin/sensor?cmd=sensinglist",
+        url:"/cgi-bin/sensor?cmd=sensinglist",
         //url:"../js/pages/network.xml",
         dataType:"xml",
         success : function(xml) {
@@ -41,7 +41,7 @@ function loadData (_mac, _id, _favorite) {
     $.ajax({
         //async:false,
         type:"get",
-        url:"http://10.0.1.159/cgi-bin/sensor?cmd=dashboard&mac=" + _mac + "&id=" + _id,
+        url:"/cgi-bin/sensor?cmd=dashboard&mac=" + _mac + "&id=" + _id,
         //url:"../js/pages/network.xml",
         dataType:"xml",
         success : function(xml) {
@@ -304,7 +304,7 @@ function onCheckboxClicked() {
     $.ajax({
         //async:false,
         type:"get",
-        url:"http://10.0.1.159/cgi-bin/sensor?cmd=modifylist&mac=" + mac + "&id=" + id + "&checked=" + checked,
+        url:"/cgi-bin/sensor?cmd=modifylist&mac=" + mac + "&id=" + id + "&checked=" + checked,
         dataType:"xml",
         success : function(xml) {
             // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
