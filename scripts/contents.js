@@ -102,10 +102,10 @@ function onLogout()
 	}
 }
 
-function onLoadPage(page)
-{
-	window.location.href = "/cgi-bin/page?cmd=" + page;
-}
+//function onLoadPage(page)
+//{
+//	window.location.href = "/cgi-bin/page?cmd=" + page;
+//}
 
 function onMainLoad()
 {
@@ -187,7 +187,7 @@ function deleteCookie( name )
 	document.cookie = name + "= " + "; expires=" + expire.toGMTString() + "; path=/";
 }
 
-function	onPageTimeout()
+function onPageTimeout()
 {
 	if(typeof window.ActiveXObject != 'undefined')
 	{
@@ -207,9 +207,8 @@ function	onPageTimeout()
 	window.location.href="/";
 }
 
-function	enablePageTimeout()
+function enablePageTimeout()
 {
-/*
 	if (typeof(sessionStorage.hPageTimeout) != "undefined")
 	{
 		clearTimeout(sessionStorage.hPageTimeout);
@@ -224,5 +223,4 @@ function	enablePageTimeout()
 	{
 		sessionStorage.hPageTimeout = setTimeout(onPageTimeout, sessionStorage.nPageTimeout);
 	}
-*/
 }
