@@ -33,7 +33,8 @@ function usim_socket_status() {
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 }
@@ -63,7 +64,8 @@ function usim_different_status(){
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 }
@@ -92,7 +94,8 @@ function usim_open_status(){
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 }
@@ -121,7 +124,8 @@ function usim_cnum() {
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 }
@@ -158,7 +162,8 @@ function is_limited() {
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 }
@@ -184,7 +189,8 @@ function get_pppData() {
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 }
@@ -253,7 +259,8 @@ function networkState() {
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 }

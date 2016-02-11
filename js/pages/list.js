@@ -22,7 +22,8 @@ function loadData () {
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 }
@@ -140,6 +141,28 @@ function modifySensor() {
     var td = tr.childNodes.item(1);
     console.log(td);
     td.innerHTML = document.getElementById("sensor_name").value;
+
+    $.ajax({
+        async:false,
+        type:"post",
+        url:"/cgi-bin/sensor?cmd=name_modify&mac=" + mac + "&id=" + id + "&name=" + document.getElementById("sensor_name").value,
+        dataType:"xml",
+        success : function(xml) {
+            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+            // TODO
+            $(xml).find("SENSOR_ADDED").each(function(){
+                console.log($(this).find("RET").text());
+
+                if ($(this).find("RET").text() == "OK") {
+                    alert("MODIFY SENSOR NAME");
+                }
+            });
+        },
+        error : function(xhr, status, error) {
+            //alert("에러발생");
+            window.location.href="/";
+        }
+    });
 }
 
 function delSensorList() {
@@ -169,7 +192,8 @@ function delSensorList() {
                 });
             },
             error : function(xhr, status, error) {
-                alert("에러발생");
+                //alert("에러발생");
+                window.location.href="/";
             }
         });
     });
@@ -198,7 +222,8 @@ function removeSensor() {
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+            //alert("에러발생");
+            window.location.href="/";
         }
     });
 

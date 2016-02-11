@@ -39,7 +39,8 @@ function loadNetworkData() {
             });
         },
         error : function(xhr, status, error) {
-            alert("에러발생");
+			//alert("에러발생");
+			window.location.href="/";
         }
     });
 }
