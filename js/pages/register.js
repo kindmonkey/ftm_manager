@@ -174,13 +174,14 @@ function makeBody(_tbody, _item, _mac) {
     tbody_tr.appendChild(document.createElement("th")).innerHTML = _item.find("ID").text();
     tbody_tr.setAttribute("id", "tr_" + _mac.replace(/"/g, "") + "_" + _item.find("ID").text().replace(/"/g, ""));
 
-    var input = document.createElement("input");
-    input.setAttribute("class", "form-control");
-    input.setAttribute("type", "text");
-    input.setAttribute("id", "input_" + _mac + "_" + _item.find("ID").text());// + "_" + _index);
-    input.value = _item.find("NAME").text();
-    console.log("input.id = ", input.id);
-    tbody_tr.appendChild(document.createElement("td").appendChild(input));
+    //var input = document.createElement("input");
+    //input.setAttribute("class", "form-control");
+    //input.setAttribute("type", "text");
+    //input.setAttribute("id", "input_" + _mac + "_" + _item.find("ID").text());// + "_" + _index);
+    //input.value = _item.find("NAME").text();
+    //console.log("input.id = ", input.id);
+    //tbody_tr.appendChild(document.createElement("td").appendChild(input));
+    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("NAME").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("TYPE").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("SN").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("STATE").text();

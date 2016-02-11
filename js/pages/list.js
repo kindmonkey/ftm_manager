@@ -135,13 +135,16 @@ function modifySensor() {
     // db 수정
 
     // 리스트에서 수정
-    var id = document.getElementById("modal_title").innerHTML;
-    var tr = document.getElementById("tr_" + id);
-    console.log(tr);
+    var mac = document.getElementById("modal_title").innerHTML.substr(0, 17);
+    var id = document.getElementById("modal_title").innerHTML.substr(20);
+
+    var tr = document.getElementById("tr_" + mac + "_" + id);
+    //console.log(tr);
     var td = tr.childNodes.item(1);
-    console.log(td);
+    //console.log(td);
     td.innerHTML = document.getElementById("sensor_name").value;
 
+    console.log(document.getElementById("sensor_name").value);
     $.ajax({
         async:false,
         type:"post",
