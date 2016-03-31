@@ -143,8 +143,8 @@ function modifySensor() {
     var td = tr.childNodes.item(1);
     //console.log(td);
     td.innerHTML = document.getElementById("sensor_name").value;
-
-    console.log(document.getElementById("sensor_name").value);
+	
+	console.log(document.getElementById("sensor_name").value);
     $.ajax({
         async:false,
         type:"post",

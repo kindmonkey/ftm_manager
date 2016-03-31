@@ -181,7 +181,7 @@ function makeBody(_tbody, _item, _mac) {
     //input.value = _item.find("NAME").text();
     //console.log("input.id = ", input.id);
     //tbody_tr.appendChild(document.createElement("td").appendChild(input));
-    tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("NAME").text();
+	tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("NAME").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("TYPE").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("SN").text();
     tbody_tr.appendChild(document.createElement("td")).innerHTML = _item.find("STATE").text();

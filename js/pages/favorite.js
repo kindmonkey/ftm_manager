@@ -211,14 +211,14 @@ function makeBody(_tbody, _item, _mac, _favorite) {
             datas = [];
             for (var i=1; i<=values.length; i++) {
                 var value;
-                if (values[values.length - i] == "N/A")
-                {
-                    value = 0;
-                } else {
-                    value = values[values.length - i];
-                }
-                var json = {time: times[values.length - i], value: value};
-                console.log(json);
+				if (values[values.length - i] == "N/A")
+				{
+					value = 0;
+				} else {
+					value = values[values.length - i];
+				}
+				var json = {time: times[values.length - i], value: value};
+				console.log(json);
                 datas.push(json);
             }
             document.getElementById("modalgraph_title").innerHTML = _item.find("MAC").text() + " - " + _item.find("ID").text();
@@ -293,15 +293,15 @@ function makeBody(_tbody, _item, _mac, _favorite) {
         var modal_tbody = document.getElementById("modal_tbody");
         for (var i=1; i<=values.length; i++) {
             var value;
-            if (values[values.length - i] == "N/A")
-            {
-                value = 0;
-            } else {
-                value = values[values.length - i];
-            }
-            var json = {time: times[values.length - i], value: value};
-            console.log(json);
-            datas.push(json);
+			if (values[values.length - i] == "N/A")
+			{
+				value = 0;
+			} else {
+				value = values[values.length - i];
+			}
+			var json = {time: times[values.length - i], value: value};
+			console.log(json);
+			datas.push(json);
         }
 
         document.getElementById("modalgraph_title").innerHTML = _item.find("MAC").text() + " - " + _item.find("ID").text();
@@ -368,7 +368,7 @@ $('#myModalGraph').on('shown.bs.modal', function () {
         xkey: 'time',
         // A list of names of data record attributes that contain y-values.
         ykeys: ['value'],
-        parseTime: false,
+		parseTime: false,
         // Labels for the ykeys -- will be displayed when you hover over the
         // chart.
         labels: ['Value']
